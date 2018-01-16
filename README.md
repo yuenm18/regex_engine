@@ -16,6 +16,29 @@ If the program is run with command line parameters, the program uses each parame
 
 If the program is run with no command line parameters, it asks the user to enter a regular expression.  Afterwards, it asks the user for strings which it will test against the regular expression.  After each string is entered, the program displays true if the string is recognized by the regular expression and false if it is not.  If no string is supplied when prompted, the program exits.
 
+**Inputs:**
+
+A line separated file containing the regular expression to parse followed by the strings to test it against.
+
+The regular expression may consists of:
+
+* `*` – star
+* `|` – union
+* Concatenation is implied ie. “ab” or “a(b)” 
+* `()` – for grouping
+* `ε` – empty string
+* Everything else is considered a letter in the alphabet
+
+Strings contain characters from the alphabet or epsilon.
+
+**Outputs:**
+
+Prints to stdout whether or not each string was recognized by the language.
+
+## Description
+
+The regular expression engine uses Thompson’s construction to convert a regular expression into an NFA.  The conversion consists of building NFAs and from other NFAs using the star, union, and concatenation operators and from single symbols.  The program then runs through the NFA using a given string and returns true if the NFA accepts that string and false if not.
+
 ## Design
 
 The program reads input from a file or stdin depending on whether command line parameters are present.  From the input, it reads a regular expression and parses it into a NFA object.  A NFA object consists of the elements of the formal description for an NFA: a set of states, a set containing the alphabet, a transition function, a start state, and a set of accept states.  In the NFA object, states are represented by integers and members of the alphabet are represented with characters.  The set of states and the set containing the alphabet are stored in a HashSet.  The transition function is represented by a HashMap.  The start state is an integer.  Since Thompson’s construction results in a NFA with only one accept state, the accept state is just stored as an integer rather than a HashSet like the state and alphabet sets.  Parsing is done recursively by creating larger NFAs from smaller NFAs.  The smallest NFAs which consist of a single transition are created with the NFA’s constructor.  Larger NFAs are built using static methods in the NFA class.  These methods are star, concatenation and union.  They take NFAs as parameters and return a new NFA which is the transform of its parameters. 
