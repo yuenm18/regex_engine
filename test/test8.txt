@@ -1,0 +1,7 @@
+ab*|c*
+abbbbbbbbbccc
+a
+abb
+ε
+bb
+ccc

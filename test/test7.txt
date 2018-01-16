@@ -1,0 +1,8 @@
+(b|e)(ar)*
+eararararar
+bararar
+bear
+b
+e
+ε
+eara
